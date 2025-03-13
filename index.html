@@ -3,529 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>自己理解コーチのコミュニケーション分析</title>
+    <title>自己理解コーチの分析</title>
     <style>
-        /* ベーススタイル */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
-        
-        body {
-            color: #333333;
-            background-color: #ffffff;
-            padding: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        /* タイポグラフィ */
-        h1 {
-            font-size: 32px;
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            margin-bottom: 40px;
-            text-align: center;
-            color: #000000;
-        }
-        
-        h2 {
-            font-size: 24px;
-            font-weight: 500;
-            margin: 30px 0 20px;
-            color: #000000;
-            border-bottom: 1px solid #CCCCCC;
-            padding-bottom: 8px;
-        }
-        
-        h3 {
-            font-size: 18px;
-            font-weight: 500;
-            margin: 25px 0 15px;
-            color: #333333;
-        }
-        
-        p {
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-        
-        /* レイアウト */
-        .container {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
-        }
-        
-        .full-width {
-            grid-column: span 12;
-        }
-        
-        .half-width {
-            grid-column: span 6;
-        }
-        
-        @media (max-width: 768px) {
-            .half-width {
-                grid-column: span 12;
-            }
-        }
-        
-        .card {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
-        }
-        
-        /* インフォグラフィック要素 */
-        .trend-chart {
-            width: 100%;
-            height: 300px;
-            position: relative;
-            margin: 30px 0;
-        }
-        
-        .trend-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: #FF3366;
-            top: 150px;
-            transform: translateY(-50%);
-        }
-        
-        .trend-point {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #FF3366;
-            transform: translate(-50%, -50%);
-        }
-        
-        .trend-label {
-            position: absolute;
-            font-size: 12px;
-            transform: translateX(-50%);
-            text-align: center;
-            width: 120px;
-        }
-        
-        .trend-top-label {
-            top: 20px;
-        }
-        
-        .trend-bottom-label {
-            bottom: 20px;
-        }
-        
-        .process-flow {
-            display: flex;
-            justify-content: space-between;
-            margin: 40px 0;
-            position: relative;
-        }
-        
-        .process-step {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            flex: 1;
-        }
-        
-        .process-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #F5F5F5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            border: 1px solid #CCCCCC;
-            font-weight: bold;
-        }
-        
-        .process-line {
-            position: absolute;
-            height: 2px;
-            background: #CCCCCC;
-            top: 30px;
-            left: 60px;
-            right: 60px;
-            z-index: 1;
-        }
-        
-        .best-practice {
-            background-color: #f8f8f8;
-            padding: 20px;
-            border-left: 3px solid #FF3366;
-            margin: 20px 0;
-        }
-        
-        .best-practice h4 {
-            font-size: 16px;
-            margin-bottom: 10px;
-            color: #333333;
-        }
-        
-        .best-practice ul {
-            padding-left: 20px;
-            margin-bottom: 0;
-        }
-        
-        .best-practice li {
-            margin-bottom: 8px;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        .venn-diagram {
-            position: relative;
-            width: 400px;
-            height: 300px;
-            margin: 40px auto;
-        }
-        
-        .venn-circle {
-            position: absolute;
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            opacity: 0.7;
-        }
-        
-        .venn-a {
-            left: 30px;
-            background-color: rgba(173, 216, 230, 0.6);
-            border: 1px solid rgba(173, 216, 230, 1);
-        }
-        
-        .venn-b {
-            right: 30px;
-            background-color: rgba(255, 192, 203, 0.6);
-            border: 1px solid rgba(255, 192, 203, 1);
-        }
-        
-        .venn-label {
-            position: absolute;
-            width: 100px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        .venn-a-label {
-            left: 90px;
-            top: 90px;
-        }
-        
-        .venn-b-label {
-            right: 90px;
-            top: 90px;
-        }
-        
-        .venn-center-label {
-            left: 50%;
-            top: 140px;
-            transform: translateX(-50%);
-            width: 160px;
-        }
-        
-        /* テーブルスタイル */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #CCCCCC;
-        }
-        
-        th {
-            background-color: #f5f5f5;
-            font-weight: 500;
-        }
-        
-        tr:hover {
-            background-color: #f9f9f9;
-        }
-        
-        /* 追加スタイル */
-        .quote-box {
-            background-color: #f9f9f9;
-            border-left: 3px solid #333333;
-            padding: 15px;
-            margin: 20px 0;
-            font-style: italic;
-        }
-        
-        .detail-list li {
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-        
-        .example-box {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-radius: 4px;
-            margin: 15px 0;
-        }
-        
-        .example-heading {
-            font-weight: 500;
-            margin-bottom: 8px;
-            display: block;
-        }
-        
-        .timeline {
-            position: relative;
-            margin: 40px 0;
-            padding-left: 30px;
-        }
-        
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: #CCCCCC;
-        }
-        
-        .timeline-item {
-            position: relative;
-            padding-bottom: 30px;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -36px;
-            top: 0;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #FF3366;
-        }
-        
-        .highlight-text {
-            background-color: #fff3f6;
-            padding: 2px 4px;
-            border-radius: 2px;
-        }
-        
-        .stat-box {
-            text-align: center;
-            padding: 20px;
-            margin: 10px 0;
-        }
-        
-        .stat-number {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 36px;
-            font-weight: 300;
-            color: #FF3366;
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .comparison-table td:nth-child(2) {
-            border-left: 1px solid #CCCCCC;
-            border-right: 1px solid #CCCCCC;
-        }
-        
-        .objective-section {
-            background-color: #f0f0f0;
-            padding: 20px;
-            border-radius: 4px;
-            margin: 30px 0;
-        }
-        
-        .objective-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .objective-icon {
-            background-color: #FF3366;
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
-        }
-        
-        .objective-title {
-            font-size: 18px;
-            font-weight: 500;
-            margin: 0;
-        }
-        
-        .achievement-list {
-            list-style-type: none;
-            padding-left: 10px;
-        }
-        
-        .achievement-list li {
-            position: relative;
-            padding-left: 30px;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        
-        .achievement-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #FF3366;
-            font-weight: bold;
-        }
-        
-        .methodology-box {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 4px;
-            margin: 20px 0;
-        }
-        
-        .methodology-title {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 15px;
-            display: block;
-        }
+        * {box-sizing:border-box; margin:0; padding:0; font-family:sans-serif;}
+        body {color:#333; max-width:1200px; margin:0 auto; padding:20px;}
+        h1 {font-size:28px; text-align:center; margin-bottom:30px;}
+        h2 {font-size:22px; border-bottom:1px solid #ccc; padding-bottom:8px; margin:25px 0 15px;}
+        h3, h4 {margin:20px 0 10px;}
+        p, li {font-size:14px; line-height:1.4; margin-bottom:10px;}
+        .container {display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;}
+        @media (max-width:768px) {.container {grid-template-columns:1fr;}}
+        .card {background:#fff; padding:20px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-bottom:20px;}
+        .best-practice, .abstract-practice {background:#f8f8f8; padding:15px; margin:15px 0; border-left:3px solid #f36;}
+        .abstract-practice-item {font-weight:bold; color:#f36; margin-bottom:3px;}
+        .pattern-panel {background:#f7f7f7; padding:15px; margin:15px 0; border-top:3px solid #f36;}
+        .pattern-item {display:flex; margin-bottom:10px;}
+        .pattern-number {background:#f36; color:#fff; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-right:10px;}
+        .pattern-title {font-weight:bold; margin-bottom:3px;}
+        .detail-list li {margin-bottom:10px;}
     </style>
 </head>
 <body>
     <h1>行動指針シートの運用振り返り</h1>
     
+    <div class="card">
+        <h2>分析概要</h2>
+        <p>109名のコーチが1年間に記入した行動指針シートを分析した結果、「体現する」と「相手の可能性を信じる」という2つの指針が効果的なコーチングの基盤となっていることが確認できました。</p>
+    </div>
+    
     <div class="container">
-        <div class="full-width">
-            <div class="card">
-                <h2>シート記入の目的と成果</h2>
-                
-                <div class="objective-section">
-                    <div class="objective-header">
-                        <div class="objective-icon">✓</div>
-                        <h3 class="objective-title">プロジェクトの目的達成</h3>
+        <!-- 体現する セクション -->
+        <div class="card">
+            <h2>「A:体現する」の分析結果</h2>
+            
+            <h3>分析で見られた傾向</h3>
+            <ul class="detail-list">
+                <li><strong>自己の実践と開示:</strong> コーチ自身が自己理解・自己実現の旅を進め、その経験をクライアントと共有</li>
+                <li><strong>価値観の体現:</strong> 自分の価値観に沿った生活を送り、日々の選択や行動で価値観を具現化</li>
+                <li><strong>自己実現に向けた具体的行動:</strong> 新サービス立ち上げ、資格取得、SNS発信など具体的行動の実践</li>
+                <li><strong>継続的な学習と成長:</strong> 読書、研修参加、メンターとの対話など知識とスキルの獲得継続</li>
+            </ul>
+            
+            <div class="abstract-practice">
+                <h4>体現するためのベストプラクティス（抽象化）</h4>
+                <ul>
+                    <li>
+                        <div class="abstract-practice-item">自己実践と経験共有</div>
+                        <div>自分自身が自己理解・自己実現の道を歩み、その経験をクライアントと共有する</div>
+                    </li>
+                    <li>
+                        <div class="abstract-practice-item">価値観に基づく日常行動</div>
+                        <div>自分の価値観ピラミッドを意識した選択と行動を日々実践する</div>
+                    </li>
+                    <li>
+                        <div class="abstract-practice-item">目標を超える成果達成</div>
+                        <div>具体的な数値目標を設定し、それを上回る成果を達成する</div>
+                    </li>
+                    <li>
+                        <div class="abstract-practice-item">継続的な学びと成長</div>
+                        <div>書籍、研修、メンタリングなどを通じて常に新たな知識とスキルを獲得する</div>
+                    </li>
+                    <li>
+                        <div class="abstract-practice-item">定期的な振り返りと改善</div>
+                        <div>自己理解ツールを定期的に見直し、新たな気づきを得る</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="pattern-panel">
+                <h4>主な行動パターン（抽象化）</h4>
+                <div class="pattern-item">
+                    <div class="pattern-number">1</div>
+                    <div>
+                        <div class="pattern-title">プログラム目標の超過達成</div>
+                        <div>設定された目標を上回る成果を達成し、自らの実力と可能性を実証する</div>
                     </div>
-                    
-                    <ul class="achievement-list">
-                        <li><strong>行動指針シート</strong>: 「新しくできた行動指針を浸透させること」が目的でした。「①行動指針を記憶し内容を理解する」「②行動指針を意識して行動する」の両面において、毎週のシート記入を通じて達成されたことがデータから確認できました。</li>
-                    </ul>
-                    
-                    <div class="stat-box">
-                        <div class="stat-number">1年間</div>
-                        <div class="stat-label">の実践と振り返りデータ</div>
+                </div>
+                <div class="pattern-item">
+                    <div class="pattern-number">2</div>
+                    <div>
+                        <div class="pattern-title">自己理解の楽しさの体現</div>
+                        <div>自己理解プロセスを楽しみながら取り組み、その価値をクライアントに示す</div>
                     </div>
                 </div>
-                
-                <div class="methodology-box">
-                    <span class="methodology-title">分析手法</span>
-                    <p>この分析では、2024年3月から2025年2月までのシート記入データを対象に、以下のプロセスで「体現する」と「相手の可能性を信じる」の行動指針について分析しました：</p>
-                    <ol style="margin-top: 10px; padding-left: 20px;">
-                        <li><strong>データ収集</strong>: 全コーチが毎週記入した行動指針シートから「A:体現する」「B:相手の可能性を信じる」の項目を抽出</li>
-                        <li><strong>テキスト分析</strong>: 記載内容をカテゴリ化し、出現頻度の高い行動パターンやキーワードを特定</li>
-                        <li><strong>パターン抽出</strong>: 繰り返し現れる行動・コミュニケーションパターンを集約</li>
-                        <li><strong>効果検証</strong>: クライアント満足度や目標達成率との相関性を検証</li>
-                        <li><strong>ベストプラクティス抽出</strong>: 高い効果を示した行動・コミュニケーション方法を特定</li>
-                    </ol>
-                </div>
-                
-                <div class="venn-diagram">
-                    <div class="venn-circle venn-a"></div>
-                    <div class="venn-circle venn-b"></div>
-                    <div class="venn-label venn-a-label">A: 体現する</div>
-                    <div class="venn-label venn-b-label">B: 相手の可能性を<br>信じる</div>
-                    <div class="venn-label venn-center-label">効果的な<br>コーチング</div>
-                </div>
-                
-                <div class="quote-box">
-                    「効果的なコーチングは、コーチ自身が自己実現を体現し、同時にクライアントの無限の可能性を信じることから生まれる」
+                <div class="pattern-item">
+                    <div class="pattern-number">3</div>
+                    <div>
+                        <div class="pattern-title">実体験に基づく情報発信</div>
+                        <div>自らの経験を様々なメディアを通じて積極的に発信する</div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="half-width">
-            <div class="card">
-                <h2>A: 体現する</h2>
-                <p>コーチ自身が自己理解や自己実現のプロセスを実践し、モデルとなる行動を示す。このアプローチでは、コーチが自分自身の自己理解と自己実現の旅を積極的に進め、その経験を活かしてクライアントをサポートします。</p>
-                
-                <h3>分析で見られた傾向</h3>
-                <ul class="detail-list">
-                    <li><strong>自己の実践と開示:</strong> データ分析から、コーチが自分自身の自己理解・自己実現の旅を積極的に進め、その経験をクライアントと共有するケースが多く見られました。これにより理論ではなく実体験に基づいたサポートが提供される傾向がありました。</li>
-                    <li><strong>価値観の体現:</strong> シートの記録から、自分の価値観ピラミッドに沿った生活を意識的に送り、日々の選択や行動を通じて自分の価値観を具現化する姿勢を示すコーチが多いことが分かりました。</li>
-                    <li><strong>自己実現に向けた具体的行動:</strong> 分析結果によると、新しいサービスの立ち上げ、資格取得、SNS発信など、自らのやりたいことに向けた具体的な行動を実践して見せるケースが多く観察されました。この傾向はクライアントの行動促進にも影響していると考えられます。</li>
-                    <li><strong>継続的な学習と成長:</strong> 記録データからは、自己啓発書の読書、研修参加、メンターとの対話など、コーチ自身が常に新しい知識やスキルを獲得し続ける活動が頻繁に報告されていることが分かりました。</li>
+        <!-- 相手の可能性を信じる セクション -->
+        <div class="card">
+            <h2>「B:相手の可能性を信じる」の分析結果</h2>
+            
+            <h3>分析で見られた傾向</h3>
+            <ul class="detail-list">
+                <li><strong>肯定的フィードバック(PF)の重視:</strong> クライアントの強みや可能性を積極的に伝える「ポジティブフィードバック」の重視</li>
+                <li><strong>待つ姿勢:</strong> 進捗が遅れていても諦めず、クライアントを信じて待つ姿勢の維持</li>
+                <li><strong>母性愛と父性愛のバランス:</strong> 受容と共感を基本としつつ、時に厳しく背中を押すバランスある関わり</li>
+                <li><strong>クライアントの主体性の尊重:</strong> クライアント自身が答えを見つける手助けをする姿勢</li>
+            </ul>
+            
+            <div class="abstract-practice">
+                <h4>相手の可能性を信じるためのベストプラクティス（抽象化）</h4>
+                <ul>
+                    <li>
+                        <div class="abstract-practice-item">潜在能力への気づきの促進</div>
+                        <div>クライアント自身が気づいていない可能性や強みを見出し、フィードバックする</div>
+                    </li>
+                    <li>
+                        <div class="abstract-practice-item">真意の確認と深掘り</div>
+                        <div>表面的な言葉だけでなく、背景にある本当の思いを引き出す</div>
+                    </li>
+                    <li>
+                        <div class="abstract-practice-item">建設的な挑戦の提供</div>
+                        <div>共感と受容を基本としつつ、必要に応じて建設的な挑戦を提供する</div>
+                    </li>
+                    <li>
+                        <div class="abstract-practice-item">粘り強いサポートと勇気づけ</div>
+                        <div>進捗の遅れや困難な状況でも諦めず、クライアントを励まし続ける</div>
+                    </li>
+                    <li>
+                        <div class="abstract-practice-item">個別化されたアプローチ</div>
+                        <div>一人ひとりの特性や状況に合わせたコミュニケーション方法を模索する</div>
+                    </li>
                 </ul>
-                
-
-                
-                <div class="example-box">
-                    <span class="example-heading">分析から見えた効果的な「体現する」アプローチ:</span>
-                    <p>質的分析では、コーチが自身の自己実現プロセスを「見える化」することの重要性が明らかになりました。特にSNSやコミュニティを通じた定期的な発信を行うコーチのクライアントは、自己実現への行動意欲が33%高い傾向が見られました。また、コーチ自身が直面する課題や乗り越えるプロセスを共有することで、クライアントの「自分もできるかもしれない」という自己効力感が向上したケースが多く報告されています。</p>
+            </div>
+            
+            <div class="pattern-panel">
+                <h4>主な行動パターン（抽象化）</h4>
+                <div class="pattern-item">
+                    <div class="pattern-number">1</div>
+                    <div>
+                        <div class="pattern-title">未認識の可能性の発見と伝達</div>
+                        <div>クライアント自身が気づいていない才能や可能性を見出し伝える</div>
+                    </div>
                 </div>
-                
-                <div class="best-practice">
-                    <h4>ベストプラクティス</h4>
-                    <ul>
-                        <li><strong>自己実現の具体的な進捗共有:</strong> 「自分の自己実現の過程を（達成済み、未達成に分けて正直ベースで自己開示）CLと共有する」ことで、理論だけでなく実践の姿を見せる</li>
-                        <li><strong>日常生活での価値観の体現:</strong> 「毎日自分の価値観を満たす行動を1つ以上取り入れる」「価値観ピラミッドを満たせたエピソードをコーチングのアイスブレイクでヒアリングしていく」など、日常レベルでの実践</li>
-                        <li><strong>コンスタントなアウトプット:</strong> 「X/Instagramでの定期的な発信」「ブログやPodcastなどのコンテンツ制作」「勉強会や小さな会の開催」など、定期的な発信と共有の場の創出</li>
-                        <li><strong>学びと成長の継続:</strong> 「自己理解メソッドの説明動画またはSF資質解説動画を毎日視聴する」「認知科学や起業の観点の学び直しから、フィードバックに活かす」など、継続的な学習とその応用</li>
-                    </ul>
+                <div class="pattern-item">
+                    <div class="pattern-number">2</div>
+                    <div>
+                        <div class="pattern-title">本質的な意志の確認</div>
+                        <div>表面的な言葉を超えて、クライアントの本当の思いを確認する</div>
+                    </div>
+                </div>
+                <div class="pattern-item">
+                    <div class="pattern-number">3</div>
+                    <div>
+                        <div class="pattern-title">適切な厳しさの提供</div>
+                        <div>受容と共感を基本としつつも、成長に必要な厳しさを提供する</div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="half-width">
-            <div class="card">
-                <h2>B: 相手の可能性を信じる</h2>
-                <p>クライアントの潜在能力を信じ、その可能性を引き出す関わり方に焦点を当てます。このアプローチでは、クライアントが自分で気づいていない才能や可能性を見出し、それを実現できると確信を持って接することを重視しています。</p>
-                
-                <h3>分析で見られた傾向</h3>
-                <ul class="detail-list">
-                    <li><strong>肯定的フィードバック(PF)の重視:</strong> シートデータの分析から、クライアントの強みや可能性を積極的に伝える「ポジティブフィードバック」を重視する傾向が顕著に見られました。「それ絶対才能！」「あなたならできる」といった言葉で可能性を伝え続ける記録が多数確認されています。</li>
-                    <li><strong>待つ姿勢:</strong> 収集したデータによると、進捗が遅れていても諦めず、クライアントを信じて待つ姿勢を持ち続けるパターンが多く観察されました。「CLを信じて連絡催促をしない」「LINEが3日間来なくても信じて待つ」などの対応例が頻繁に報告されています。</li>
-                    <li><strong>母性愛と父性愛のバランス:</strong> 分析の結果、受容し共感する「母性愛」と、時に厳しく背中を押す「父性愛」のバランスを取った関わり方が効果的だという認識が広がっていることがわかりました。「寄り添いつつも、あえて厳しいことも伝える」という接し方が増加傾向にあります。</li>
-                    <li><strong>クライアントの主体性の尊重:</strong> データからは、答えを与えるのではなく、「CLが自分で答えを出す力を信じる」「質問だけして待つ」など、クライアント自身が答えを見つける手助けをする姿勢が多く見られることがわかりました。</li>
-                </ul>
-                
-
-                
-                <div class="example-box">
-                    <span class="example-heading">分析から見えた効果的な「相手の可能性を信じる」アプローチ:</span>
-                    <p>データ分析の結果、「可能性を信じる」コミュニケーションの中でも特に「根拠のあるポジティブフィードバック」が最も強い影響力を持つことがわかりました。「あなたならできる」という一般的な励ましよりも、クライアントの具体的な強みや過去の成功体験に基づいた「〇〇という強みがあるからこそ、△△ができるはず」という伝え方が、クライアントの行動変容率を42%向上させることが確認されました。また、進捗が停滞していても「待つ姿勢」を維持したケースでは、最終的な完遂率が67%だったのに対し、過度に介入したケースでは48%にとどまりました。</p>
-                </div>
-                
-                <div class="best-practice">
-                    <h4>ベストプラクティス</h4>
-                    <ul>
-                        <li><strong>積極的なポジティブフィードバック:</strong> 「コーチング中やLINEで相手の可能性を信じていることを積極的に伝える」「CLの才能を活かせるようなコーチングの進め方をした結果、感謝された」など、徹底した肯定的関わり</li>
-                        <li><strong>CLの自己解決力を尊重する:</strong> 「CLの質問に対して、内容によってはそのまま答えない」「丁寧すぎる関わりをすることで、CLの自己解決できる力を奪い、依存体質を促すことに繋がるリスクがある」という認識に基づく関わり</li>
-                        <li><strong>母性愛と父性愛のバランスある関わり:</strong> 「母性愛と父性愛を使い分けながら相手の可能性を最大限に発揮するために関わる」「CLファーストで徹底的に寄り添いつつも可能性を信じ背中を押す」という両面アプローチ</li>
-                        <li><strong>CLの進捗に合わせた適切なサポート:</strong> 「進捗が遅れていても、あきらめず、『あなたなら大丈夫』と伝え続ける」「CLとの約束を2回破られたが、CLを信じて応援した結果、PGMが捗らないCLがPGM完遂した」など、状況に応じた柔軟性</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    </div>
+</body>
+</html>
